@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hackathon/domain/model/user.dart';
 import 'package:hackathon/domain/use_case/get_user_use_case.dart';
 import 'package:hackathon/domain/use_case/login_use_case.dart';
+import 'package:hackathon/domain/utils/constants.dart';
 import 'package:injectable/injectable.dart';
 
 part 'login_event.dart';
@@ -29,7 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (uid != null) {
           // get user by uid
           var user = await getUserUseCase(uid);
-          emit(SuccessfulLoginState(user));
+          emit(SuccessfulLoginState(user, user.role.contains(Roles.superAdmin)));
         }
       } on FirebaseAuthException catch (_) {
         emit(LoginErrorState());

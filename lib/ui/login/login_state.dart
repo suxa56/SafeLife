@@ -15,6 +15,7 @@ final class UnexpectedErrorState extends LoginState {}
 
 final class SuccessfulLoginState extends LoginState {
   final UserModel user;
+  final bool isAdmin;
 
-  SuccessfulLoginState(this.user);
+  SuccessfulLoginState(this.user, this.isAdmin);
 }

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hackathon/di/injections.dart';
-import 'package:hackathon/ui/sign_in/login_bloc.dart';
+import 'package:hackathon/domain/utils/constants.dart';
+import 'package:hackathon/ui/login/login_bloc.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -46,7 +48,11 @@ class _SignInScreenState extends State<SignInScreen> {
           });
         }
         if (state is SuccessfulLoginState) {
-
+          if (state.isAdmin) {
+            context.go(Routes.admin);
+          } else {
+            context.go(Routes.workspace);
+          }
         }
       },
       child: Scaffold(
