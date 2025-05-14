@@ -1,13 +1,32 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:talker/talker.dart';
+import 'di/injections.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    // DI
+    configureDependencies();
+    // Gray Screen Error Handling
+    FlutterError.onError = (details) => getIt<Talker>().handle(details);
+    // Platform Error Handling
+    PlatformDispatcher.instance.onError = (exception, stackTrace) {
+      getIt<Talker>().handle(exception, stackTrace);
+      return true;
+    };
+    // Run App
+    runApp(const MyApp());
+  }, (error, stack) {
+    getIt<Talker>().handle(error, stack);
+  });
 }
 
 class MyApp extends StatelessWidget {
