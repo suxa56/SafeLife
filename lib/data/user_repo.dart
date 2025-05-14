@@ -1,6 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:hackathon/di/injections.dart';
+import 'package:hackathon/domain/model/user.dart';
 import 'package:hackathon/domain/repo/abstract_user_repo.dart';
 import 'package:injectable/injectable.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 @Injectable(as: AbstractUserRepo)
 class UserRepo extends AbstractUserRepo {
@@ -12,12 +15,12 @@ class UserRepo extends AbstractUserRepo {
   }
 
   @override
-  Future getUser(String uid) async {
+  Future<UserModel> getUser(String uid) async {
     var dataSnapshot = await ref.child(uid).get();
-    print(uid);
     if (dataSnapshot.exists) {
-      print(dataSnapshot.value);
-      return dataSnapshot.value;
+      return dataSnapshot.value as UserModel;
     }
+    getIt<Talker>().error("User repo -> getUser() -> User not found by given uid");
+    throw Exception("User not found exception");
   }
 }

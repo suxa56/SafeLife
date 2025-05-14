@@ -19,7 +19,7 @@ import 'package:hackathon/domain/repo/abstract_auth_repo.dart' as _i799;
 import 'package:hackathon/domain/repo/abstract_user_repo.dart' as _i414;
 import 'package:hackathon/domain/use_case/get_user_use_case.dart' as _i618;
 import 'package:hackathon/domain/use_case/login_use_case.dart' as _i410;
-import 'package:hackathon/ui/sign_in/sign_in_bloc.dart' as _i1001;
+import 'package:hackathon/ui/sign_in/login_bloc.dart' as _i772;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:talker_flutter/talker_flutter.dart' as _i207;
 
@@ -40,14 +40,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i799.AbstractAuthRepo>(
       () => _i704.AuthRepo(auth: gh<_i59.FirebaseAuth>()),
     );
+    gh.factory<_i618.GetUserUseCase>(
+      () => _i618.GetUserUseCase(gh<_i414.AbstractUserRepo>()),
+    );
     gh.factory<_i410.LoginUseCase>(
       () => _i410.LoginUseCase(repo: gh<_i799.AbstractAuthRepo>()),
     );
-    gh.lazySingleton<_i1001.SignInBloc>(
-      () => _i1001.SignInBloc(
-        gh<_i410.LoginUseCase>(),
-        gh<_i618.GetUserUseCase>(),
-      ),
+    gh.lazySingleton<_i772.LoginBloc>(
+      () =>
+          _i772.LoginBloc(gh<_i410.LoginUseCase>(), gh<_i618.GetUserUseCase>()),
     );
     return this;
   }

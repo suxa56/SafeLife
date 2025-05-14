@@ -1,4 +1,4 @@
-class User {
+class UserModel {
   String uid;
   String name;
   String surname;
@@ -6,7 +6,7 @@ class User {
   String email;
   String role;
 
-  User(
+  UserModel(
     this.uid,
     this.name,
     this.surname,

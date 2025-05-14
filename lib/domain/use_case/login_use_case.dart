@@ -7,5 +7,5 @@ class LoginUseCase {
 
   LoginUseCase({required this.repo});
 
-  Future<String?> call(String email, String password) async => await repo.login(email, password);
+  Future<String?> call(String email, String password) => repo.login(email, password);
 }
