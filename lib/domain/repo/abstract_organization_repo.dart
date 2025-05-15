@@ -1,3 +1,5 @@
+import 'package:hackathon/domain/model/organization.dart';
+
 abstract class AbstractOrganizationRepo {
-  Future<String> addOrganization(String uid, String name);
+  Future<String> addOrganization(Organization organization);
 }

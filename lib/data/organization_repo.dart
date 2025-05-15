@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:hackathon/domain/model/organization.dart';
 import 'package:hackathon/domain/repo/abstract_organization_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -12,8 +13,8 @@ class OrganizationRepo extends AbstractOrganizationRepo {
   }
 
   @override
-  Future<String> addOrganization(String uid, String name) async {
-    await ref.child(uid).set(name);
-    return name;
+  Future<String> addOrganization(Organization organization) async {
+    await ref.child(organization.uid).set(organization.toJson());
+    return organization.name;
   }
 }

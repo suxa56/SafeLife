@@ -25,6 +25,7 @@ class _AdminScreenState extends State<AdminScreen> {
           SnackBar snackBar = SnackBar(
               content: Text('${state.name} добавлено'));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
         }
       },
       child: Scaffold(
@@ -56,6 +57,10 @@ class _AdminScreenState extends State<AdminScreen> {
                     bloc.add(AddOrganizationEvent(value));
                   },
                 );
+                final state = _key.currentState;
+                if (state != null) {
+                  state.toggle();
+                }
               },
             ),
             // TODO(): Полноценная форма с названием должности, чек-листом для него
