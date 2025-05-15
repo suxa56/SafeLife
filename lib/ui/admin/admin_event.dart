@@ -8,3 +8,10 @@ final class AddOrganizationEvent extends AdminEvent {
 
   AddOrganizationEvent(this.name);
 }
+
+final class AddPositionEvent extends AdminEvent {
+  final String name;
+  final List<String> jd;
+
+  AddPositionEvent(this.name, this.jd);
+}

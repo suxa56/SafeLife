@@ -10,3 +10,10 @@ final class OrganizationAddedState extends AdminState{
 
   OrganizationAddedState(this.name);
 }
+
+final class PositionAddedState extends AdminState{
+  final String name;
+
+  PositionAddedState(this.name);
+
+}

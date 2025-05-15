@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon/domain/model/user.dart';
 import 'package:hackathon/domain/use_case/get_user_use_case.dart';
 import 'package:hackathon/domain/use_case/login_use_case.dart';

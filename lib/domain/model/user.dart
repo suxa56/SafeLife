@@ -4,6 +4,7 @@ class UserModel {
   String surname;
   String organization;
   String email;
+  String position;
   String role;
 
   UserModel({
@@ -12,6 +13,7 @@ class UserModel {
     required this.surname,
     required this.organization,
     required this.email,
+    required this.position,
     required this.role,
   });
 
@@ -22,6 +24,7 @@ class UserModel {
       surname: json['surname'] as String,
       organization: json['organization'] as String,
       email: json['email'] as String,
+      position: json['position'] as String,
       role: json['role'] as String,
     );
   }
@@ -33,6 +36,7 @@ class UserModel {
       'surname': surname,
       'organization': organization,
       'email': email,
+      'position': position,
       'role': role,
     };
   }

@@ -4,6 +4,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:hackathon/di/injections.dart';
 import 'package:hackathon/ui/admin/admin_bloc.dart';
 import 'package:hackathon/ui/dialogs/new_organization.dart';
+import 'package:hackathon/ui/dialogs/new_position.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -15,6 +16,13 @@ class AdminScreen extends StatefulWidget {
 class _AdminScreenState extends State<AdminScreen> {
   final _key = GlobalKey<ExpandableFabState>();
   final bloc = getIt<AdminBloc>();
+
+  void _toggleFAB() {
+    final state = _key.currentState;
+    if (state != null) {
+      state.toggle();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +56,7 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
           children: [
             FloatingActionButton.extended(
+              heroTag: 'organization',
               label: const Text("Организация"),
               icon: const Icon(Icons.corporate_fare_outlined),
               onPressed: () {
@@ -57,30 +66,37 @@ class _AdminScreenState extends State<AdminScreen> {
                     bloc.add(AddOrganizationEvent(value));
                   },
                 );
-                final state = _key.currentState;
-                if (state != null) {
-                  state.toggle();
-                }
+                _toggleFAB();
               },
             ),
-            // TODO(): Полноценная форма с названием должности, чек-листом для него
             FloatingActionButton.extended(
+              heroTag: 'position',
               label: const Text("Должность"),
               icon: const Icon(Icons.badge_outlined),
               onPressed: () {
-                const SnackBar snackBar = SnackBar(
-                    content: Text("Реализуй, как будет время"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (context) => NewPositionDialog(
+                      onSave: (name, jd) {
+                        bloc.add(AddPositionEvent(name, jd));
+                      },
+                    ),
+                  ),
+                );
+                _toggleFAB();
               },
             ),
             // TODO(): Полноценная форма с имя, фамилия, пароль, должность, организация, почта
             FloatingActionButton.extended(
+              heroTag: 'user',
               label: const Text("Пользователь"),
               icon: const Icon(Icons.supervised_user_circle_outlined),
               onPressed: () {
                 const SnackBar snackBar = SnackBar(
                     content: Text("Реализуй, как будет время"));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                _toggleFAB();
               },
             ),
           ],
